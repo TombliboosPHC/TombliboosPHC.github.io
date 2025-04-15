@@ -2,559 +2,570 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2048 游戏</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金华三日游完美行程</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #faf8ef;
-            margin: 0;
-            padding: 20px;
-            touch-action: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
         }
-        
+
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
         .container {
-            width: 100%;
-            max-width: 500px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 2rem;
         }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+
+        .day-card {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-        
-        h1 {
-            font-size: 40px;
-            margin: 0;
-            color: #776e65;
-        }
-        
-        .score-container {
-            background: #bbada0;
-            padding: 10px 15px;
-            border-radius: 5px;
+
+        .day-header {
+            background: #1e3c72;
             color: white;
-            font-weight: bold;
-            text-align: center;
+            padding: 1.5rem;
         }
-        
-        .score-title {
-            font-size: 14px;
-            display: block;
+
+        .day-content {
+            padding: 2rem;
         }
-        
-        .score-value {
-            font-size: 20px;
-        }
-        
-        .game-container {
-            background: #bbada0;
-            border-radius: 6px;
-            padding: 15px;
+
+        .timeline {
             position: relative;
-            margin-bottom: 20px;
+            padding-left: 2rem;
         }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-gap: 15px;
-            position: relative;
-        }
-        
-        .cell {
-            background: rgba(238, 228, 218, 0.35);
-            border-radius: 3px;
-            aspect-ratio: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 35px;
-            font-weight: bold;
-            color: #776e65;
-        }
-        
-        .tile {
+
+        .timeline::before {
+            content: '';
             position: absolute;
-            width: calc(25% - 15px);
-            aspect-ratio: 1;
-            background: #eee4da;
-            border-radius: 3px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 35px;
-            font-weight: bold;
-            transition: all 0.1s ease-in-out;
-            z-index: 10;
-        }
-        
-        .tile-2 { background: #eee4da; color: #776e65; }
-        .tile-4 { background: #ede0c8; color: #776e65; }
-        .tile-8 { background: #f2b179; color: #f9f6f2; }
-        .tile-16 { background: #f59563; color: #f9f6f2; }
-        .tile-32 { background: #f67c5f; color: #f9f6f2; }
-        .tile-64 { background: #f65e3b; color: #f9f6f2; }
-        .tile-128 { background: #edcf72; color: #f9f6f2; font-size: 30px; }
-        .tile-256 { background: #edcc61; color: #f9f6f2; font-size: 30px; }
-        .tile-512 { background: #edc850; color: #f9f6f2; font-size: 30px; }
-        .tile-1024 { background: #edc53f; color: #f9f6f2; font-size: 25px; }
-        .tile-2048 { background: #edc22e; color: #f9f6f2; font-size: 25px; }
-        
-        .game-over {
-            position: absolute;
-            top: 0;
             left: 0;
-            width: 100%;
+            top: 0;
             height: 100%;
-            background: rgba(238, 228, 218, 0.73);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            z-index: 100;
-            display: none;
-        }
-        
-        .game-over-text {
-            font-size: 60px;
-            font-weight: bold;
-            color: #776e65;
-            margin-bottom: 30px;
-        }
-        
-        .restart-button {
-            background: #8f7a66;
-            color: white;
-            border: none;
+            width: 3px;
+            background: linear-gradient(to bottom, #1e3c72, #2a5298);
             border-radius: 3px;
-            padding: 10px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
-        .instructions {
-            color: #776e65;
-            margin-top: 20px;
-            line-height: 1.5;
+
+        .time-block {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .time-block:hover {
+            transform: translateX(5px);
+        }
+
+        .time-block::before {
+            content: '';
+            position: absolute;
+            left: -2.1rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border: 3px solid #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .time-block:hover::before {
+            transform: scale(1.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .time-block h3 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .time-block p {
+            color: #2a5298;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .time-block ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .time-block ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .time-block ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        .tips-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .tip-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .weather-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .weather-card {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .food-section {
+            margin-top: 2rem;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .food-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .food-card-content {
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+                padding: 0 1rem;
+            }
+
+            header p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .day-card {
+                margin-bottom: 1.5rem;
+                border-radius: 8px;
+            }
+
+            .day-header {
+                padding: 1rem;
+            }
+
+            .day-header h2 {
+                font-size: 1.3rem;
+            }
+
+            .day-content {
+                padding: 1rem;
+            }
+
+            .timeline {
+                padding-left: 1.5rem;
+            }
+
+            .time-block {
+                margin-bottom: 1.5rem;
+                padding-left: 1rem;
+            }
+
+            .time-block::before {
+                left: -1.8rem;
+                width: 0.8rem;
+                height: 0.8rem;
+            }
+
+            .time-block h3 {
+                font-size: 1.1rem;
+            }
+
+            .time-block p {
+                font-size: 0.95rem;
+            }
+
+            .time-block ul li {
+                font-size: 0.9rem;
+                padding-left: 1.2rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .weather-section {
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .weather-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .weather-card {
+                padding: 0.8rem;
+            }
+
+            .tips-section {
+                padding: 1rem;
+            }
+
+            .tips-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .tip-card {
+                padding: 0.8rem;
+            }
+
+            .food-section {
+                margin-top: 1.5rem;
+            }
+
+            .food-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .food-card {
+                margin-bottom: 0.5rem;
+            }
+
+            .food-card-content {
+                padding: 0.8rem;
+            }
+
+            .food-card-content h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .food-card-content p {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 0 0.8rem;
+            }
+
+            .day-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .timeline::before {
+                width: 2px;
+            }
+
+            .time-block::before {
+                width: 0.7rem;
+                height: 0.7rem;
+                left: -1.6rem;
+            }
+
+            .time-block {
+                padding-left: 0.8rem;
+            }
+
+            .time-block h3 {
+                font-size: 1rem;
+            }
+
+            .time-block p, .time-block ul li {
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>金华三日游完美行程</h1>
+        <p>探索金华的文化、美食与自然风光</p>
+    </header>
+
     <div class="container">
-        <div class="header">
-            <h1>2048</h1>
-            <div class="score-container">
-                <span class="score-title">分数</span>
-                <span class="score-value" id="score">0</span>
+        <div class="weather-section">
+            <h2>近期天气</h2>
+            <div class="weather-grid">
+                <div class="weather-card">
+                    <h3>今天</h3>
+                    <p>晴转多云</p>
+                    <p>27°C / 13°C</p>
+                </div>
+                <div class="weather-card">
+                    <h3>明天</h3>
+                    <p>多云</p>
+                    <p>26°C / 15°C</p>
+                </div>
+                <div class="weather-card">
+                    <h3>后天</h3>
+                    <p>中雨转小雨</p>
+                    <p>24°C / 15°C</p>
+                </div>
             </div>
         </div>
-        
-        <div class="game-container">
-            <div class="grid" id="grid">
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h2>第一天：横店影视城一日游</h2>
             </div>
-            
-            <div class="game-over" id="game-over">
-                <div class="game-over-text">游戏结束!</div>
-                <button class="restart-button" onclick="startGame()">再来一局</button>
+            <div class="day-content">
+                <div class="timeline">
+                    <div class="time-block">
+                        <h3>上午 (9:00-12:00)</h3>
+                        <p>横店影视城明清宫苑景区</p>
+                        <ul>
+                            <li>参观中国最大的古装影视拍摄基地</li>
+                            <li>观看大型表演节目</li>
+                            <li>打卡经典拍摄场景</li>
+                        </ul>
+                    </div>
+                    <div class="time-block">
+                        <h3>中午 (12:00-13:30)</h3>
+                        <p>横店特色午餐</p>
+                        <ul>
+                            <li>品尝浙江本地特色菜</li>
+                            <li>休息调整</li>
+                        </ul>
+                    </div>
+                    <div class="time-block">
+                        <h3>下午 (13:30-17:30)</h3>
+                        <p>影视城其他景区</p>
+                        <ul>
+                            <li>参观主题园区</li>
+                            <li>观看表演节目</li>
+                            <li>体验影视拍摄场景</li>
+                        </ul>
+                    </div>
+                    <div class="time-block">
+                        <h3>晚上 (18:00-21:00)</h3>
+                        <p>横店夜景和表演</p>
+                        <ul>
+                            <li>欣赏夜间表演</li>
+                            <li>体验横店夜市</li>
+                            <li>品尝特色小吃</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="instructions">
-            <p>使用键盘方向键或手机滑动来移动方块</p>
-            <p>相同数字的方块相撞时会合并成它们的和!</p>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h2>第二天：古镇文化之旅</h2>
+            </div>
+            <div class="day-content">
+                <div class="timeline">
+                    <div class="time-block">
+                        <h3>上午 (9:00-12:00)</h3>
+                        <p>佛堂古镇</p>
+                        <ul>
+                            <li>游览古街古巷</li>
+                            <li>参观历史建筑</li>
+                            <li>体验传统文化</li>
+                        </ul>
+                    </div>
+                    <div class="time-block">
+                        <h3>中午 (12:00-13:30)</h3>
+                        <p>古镇特色午餐</p>
+                        <ul>
+                            <li>品尝当地特色小吃</li>
+                            <li>体验传统美食</li>
+                        </ul>
+                    </div>
+                    <div class="time-block">
+                        <h3>下午 (14:00-17:30)</h3>
+                        <p>游埠古镇</p>
+                        <ul>
+                            <li>漫步古街</li>
+                            <li>参观古民居</li>
+                            <li>体验本地民俗</li>
+                        </ul>
+                    </div>
+                    <div class="time-block">
+                        <h3>晚上</h3>
+                        <p>返回市区</p>
+                        <ul>
+                            <li>品尝金华火腿等特色美食</li>
+                            <li>逛夜市或商业区</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header">
+                <h2>第三天：自然风光之旅</h2>
+            </div>
+            <div class="day-content">
+                <div class="timeline">
+                    <div class="time-block">
+                        <h3>上午 (9:00-12:00)</h3>
+                        <p>双龙洞景区</p>
+                        <ul>
+                            <li>探索天然溶洞</li>
+                            <li>观赏壮观景色</li>
+                            <li>拍照留念</li>
+                        </ul>
+                    </div>
+                    <div class="time-block">
+                        <h3>中午 (12:00-13:30)</h3>
+                        <p>农家乐用餐</p>
+                        <ul>
+                            <li>品尝当地农家菜</li>
+                            <li>休息调整</li>
+                        </ul>
+                    </div>
+                    <div class="time-block">
+                        <h3>下午 (14:00-17:00)</h3>
+                        <p>金华山小冰岛</p>
+                        <ul>
+                            <li>观赏自然风光</li>
+                            <li>拍照打卡</li>
+                            <li>户外休闲</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h2>实用贴士</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>交通建议</h3>
+                    <ul>
+                        <li>建议租车或包车</li>
+                        <li>可使用打车软件</li>
+                        <li>提前查询公交路线</li>
+                    </ul>
+                </div>
+                <div class="tip-card">
+                    <h3>住宿建议</h3>
+                    <ul>
+                        <li>第一晚住横店</li>
+                        <li>第二、三晚住市区</li>
+                        <li>提前预订酒店</li>
+                    </ul>
+                </div>
+                <div class="tip-card">
+                    <h3>装备建议</h3>
+                    <ul>
+                        <li>舒适运动鞋</li>
+                        <li>防晒用品</li>
+                        <li>雨具</li>
+                        <li>充足饮用水</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="food-section">
+            <h2>特色美食推荐</h2>
+            <div class="food-grid">
+                <div class="food-card">
+                    <div class="food-card-content">
+                        <h3>金华火腿</h3>
+                        <p>金华特产，香味浓郁，肉质细腻，咸香可口，是金华最负盛名的特产之一</p>
+                    </div>
+                </div>
+                <div class="food-card">
+                    <div class="food-card-content">
+                        <h3>金华酥饼</h3>
+                        <p>历史悠久的传统名点，外皮金黄酥脆，内馅以梅干菜和猪肉为主，香味浓郁。据传始创于唐代程咬金，是金华最具代表性的特产之一。</p>
+                    </div>
+                </div>
+                <div class="food-card">
+                    <div class="food-card-content">
+                        <h3>义乌麦饼</h3>
+                        <p>香酥可口的传统点心，外皮酥脆，内里绵软，是义乌地区特色小吃</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <script>
-        // 游戏状态
-        let grid = [];
-        let score = 0;
-        let gameOver = false;
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchEndX = 0;
-        let touchEndY = 0;
-        
-        // 初始化游戏
-        function startGame() {
-            grid = [
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0]
-            ];
-            score = 0;
-            gameOver = false;
-            document.getElementById('score').textContent = score;
-            document.getElementById('game-over').style.display = 'none';
-            
-            // 清除所有现有的tile
-            const tiles = document.querySelectorAll('.tile');
-            tiles.forEach(tile => tile.remove());
-            
-            // 添加两个初始方块
-            addRandomTile();
-            addRandomTile();
-            
-            updateView();
-        }
-        
-        // 添加随机方块
-        function addRandomTile() {
-            if (isGridFull()) return;
-            
-            let value = Math.random() < 0.9 ? 2 : 4;
-            let emptyCells = [];
-            
-            // 找到所有空单元格
-            for (let row = 0; row < 4; row++) {
-                for (let col = 0; col < 4; col++) {
-                    if (grid[row][col] === 0) {
-                        emptyCells.push({ row, col });
-                    }
-                }
-            }
-            
-            // 随机选择一个空单元格
-            if (emptyCells.length > 0) {
-                const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-                grid[row][col] = value;
-            }
-        }
-        
-        // 检查网格是否已满
-        function isGridFull() {
-            for (let row = 0; row < 4; row++) {
-                for (let col = 0; col < 4; col++) {
-                    if (grid[row][col] === 0) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-        
-        // 检查游戏是否结束
-        function checkGameOver() {
-            // 如果有空格，游戏未结束
-            if (!isGridFull()) return false;
-            
-            // 检查是否有相邻的相同数字
-            for (let row = 0; row < 4; row++) {
-                for (let col = 0; col < 4; col++) {
-                    const value = grid[row][col];
-                    
-                    // 检查右侧
-                    if (col < 3 && grid[row][col + 1] === value) return false;
-                    // 检查下方
-                    if (row < 3 && grid[row + 1][col] === value) return false;
-                }
-            }
-            
-            return true;
-        }
-        
-        // 更新视图
-        function updateView() {
-            // 清除所有现有的tile
-            const tiles = document.querySelectorAll('.tile');
-            tiles.forEach(tile => tile.remove());
-            
-            // 添加当前所有tile
-            for (let row = 0; row < 4; row++) {
-                for (let col = 0; col < 4; col++) {
-                    const value = grid[row][col];
-                    if (value !== 0) {
-                        const tile = document.createElement('div');
-                        tile.className = `tile tile-${value}`;
-                        tile.textContent = value;
-                        
-                        // 计算位置
-                        const gridElement = document.getElementById('grid');
-                        const cellSize = gridElement.offsetWidth / 4;
-                        const x = col * (cellSize + 15) + 15;
-                        const y = row * (cellSize + 15) + 15;
-                        
-                        tile.style.left = `${x}px`;
-                        tile.style.top = `${y}px`;
-                        tile.style.width = `${cellSize - 15}px`;
-                        
-                        gridElement.appendChild(tile);
-                    }
-                }
-            }
-        }
-        
-        // 移动方块
-        function move(direction) {
-            if (gameOver) return false;
-            
-            let moved = false;
-            const oldGrid = JSON.parse(JSON.stringify(grid));
-            
-            // 根据方向处理移动
-            switch (direction) {
-                case 'up':
-                    moved = moveUp();
-                    break;
-                case 'right':
-                    moved = moveRight();
-                    break;
-                case 'down':
-                    moved = moveDown();
-                    break;
-                case 'left':
-                    moved = moveLeft();
-                    break;
-            }
-            
-            // 如果移动有效，添加新方块并更新视图
-            if (moved) {
-                addRandomTile();
-                updateView();
-                document.getElementById('score').textContent = score;
-                
-                // 检查游戏是否结束
-                if (checkGameOver()) {
-                    gameOver = true;
-                    document.getElementById('game-over').style.display = 'flex';
-                }
-            }
-            
-            return moved;
-        }
-        
-        // 向上移动
-        function moveUp() {
-            let moved = false;
-            
-            for (let col = 0; col < 4; col++) {
-                // 合并相同的数字
-                for (let row = 1; row < 4; row++) {
-                    if (grid[row][col] !== 0) {
-                        let currentRow = row;
-                        while (currentRow > 0) {
-                            if (grid[currentRow - 1][col] === 0) {
-                                // 移动到空位置
-                                grid[currentRow - 1][col] = grid[currentRow][col];
-                                grid[currentRow][col] = 0;
-                                currentRow--;
-                                moved = true;
-                            } else if (grid[currentRow - 1][col] === grid[currentRow][col]) {
-                                // 合并相同的数字
-                                grid[currentRow - 1][col] *= 2;
-                                score += grid[currentRow - 1][col];
-                                grid[currentRow][col] = 0;
-                                moved = true;
-                                break;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            return moved;
-        }
-        
-        // 向右移动
-        function moveRight() {
-            let moved = false;
-            
-            for (let row = 0; row < 4; row++) {
-                // 合并相同的数字
-                for (let col = 2; col >= 0; col--) {
-                    if (grid[row][col] !== 0) {
-                        let currentCol = col;
-                        while (currentCol < 3) {
-                            if (grid[row][currentCol + 1] === 0) {
-                                // 移动到空位置
-                                grid[row][currentCol + 1] = grid[row][currentCol];
-                                grid[row][currentCol] = 0;
-                                currentCol++;
-                                moved = true;
-                            } else if (grid[row][currentCol + 1] === grid[row][currentCol]) {
-                                // 合并相同的数字
-                                grid[row][currentCol + 1] *= 2;
-                                score += grid[row][currentCol + 1];
-                                grid[row][currentCol] = 0;
-                                moved = true;
-                                break;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            return moved;
-        }
-        
-        // 向下移动
-        function moveDown() {
-            let moved = false;
-            
-            for (let col = 0; col < 4; col++) {
-                // 合并相同的数字
-                for (let row = 2; row >= 0; row--) {
-                    if (grid[row][col] !== 0) {
-                        let currentRow = row;
-                        while (currentRow < 3) {
-                            if (grid[currentRow + 1][col] === 0) {
-                                // 移动到空位置
-                                grid[currentRow + 1][col] = grid[currentRow][col];
-                                grid[currentRow][col] = 0;
-                                currentRow++;
-                                moved = true;
-                            } else if (grid[currentRow + 1][col] === grid[currentRow][col]) {
-                                // 合并相同的数字
-                                grid[currentRow + 1][col] *= 2;
-                                score += grid[currentRow + 1][col];
-                                grid[currentRow][col] = 0;
-                                moved = true;
-                                break;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            return moved;
-        }
-        
-        // 向左移动
-        function moveLeft() {
-            let moved = false;
-            
-            for (let row = 0; row < 4; row++) {
-                // 合并相同的数字
-                for (let col = 1; col < 4; col++) {
-                    if (grid[row][col] !== 0) {
-                        let currentCol = col;
-                        while (currentCol > 0) {
-                            if (grid[row][currentCol - 1] === 0) {
-                                // 移动到空位置
-                                grid[row][currentCol - 1] = grid[row][currentCol];
-                                grid[row][currentCol] = 0;
-                                currentCol--;
-                                moved = true;
-                            } else if (grid[row][currentCol - 1] === grid[row][currentCol]) {
-                                // 合并相同的数字
-                                grid[row][currentCol - 1] *= 2;
-                                score += grid[row][currentCol - 1];
-                                grid[row][currentCol] = 0;
-                                moved = true;
-                                break;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            return moved;
-        }
-        
-        // 键盘事件处理
-        document.addEventListener('keydown', function(event) {
-            let direction;
-            
-            switch (event.key) {
-                case 'ArrowUp':
-                    direction = 'up';
-                    break;
-                case 'ArrowRight':
-                    direction = 'right';
-                    break;
-                case 'ArrowDown':
-                    direction = 'down';
-                    break;
-                case 'ArrowLeft':
-                    direction = 'left';
-                    break;
-                default:
-                    return; // 忽略其他按键
-            }
-            
-            event.preventDefault();
-            move(direction);
-        });
-        
-        // 触摸事件处理
-        const gameContainer = document.querySelector('.game-container');
-        
-        gameContainer.addEventListener('touchstart', function(event) {
-            touchStartX = event.touches[0].clientX;
-            touchStartY = event.touches[0].clientY;
-        }, false);
-        
-        gameContainer.addEventListener('touchmove', function(event) {
-            event.preventDefault();
-        }, false);
-        
-        gameContainer.addEventListener('touchend', function(event) {
-            if (!touchStartX || !touchStartY) return;
-            
-            touchEndX = event.changedTouches[0].clientX;
-            touchEndY = event.changedTouches[0].clientY;
-            
-            const dx = touchEndX - touchStartX;
-            const dy = touchEndY - touchStartY;
-            
-            // 确定滑动方向
-            if (Math.abs(dx) > Math.abs(dy)) {
-                if (dx > 0) {
-                    move('right');
-                } else {
-                    move('left');
-                }
-            } else {
-                if (dy > 0) {
-                    move('down');
-                } else {
-                    move('up');
-                }
-            }
-            
-            // 重置触摸位置
-            touchStartX = 0;
-            touchStartY = 0;
-        }, false);
-        
-        // 开始游戏
-        startGame();
-    </script>
 </body>
-</html>
+</html> 

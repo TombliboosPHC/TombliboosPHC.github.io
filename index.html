@@ -3,569 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>金华三日游完美行程</title>
+    <title>Puff的个人主页</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Microsoft YaHei', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f5f5f5;
-        }
-
-        header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
+        .bio {
             text-align: center;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .day-card {
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .day-header {
-            background: #1e3c72;
-            color: white;
-            padding: 1.5rem;
-        }
-
-        .day-content {
-            padding: 2rem;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background: linear-gradient(to bottom, #1e3c72, #2a5298);
-            border-radius: 3px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .time-block {
-            position: relative;
-            margin-bottom: 2.5rem;
-            padding-left: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .time-block:hover {
-            transform: translateX(5px);
-        }
-
-        .time-block::before {
-            content: '';
-            position: absolute;
-            left: -2.1rem;
-            top: 0.5rem;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            border: 3px solid #ffffff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .time-block:hover::before {
-            transform: scale(1.2);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .time-block h3 {
-            color: #1e3c72;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .time-block p {
-            color: #2a5298;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .time-block ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .time-block ul li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #666;
-        }
-
-        .time-block ul li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: #1e3c72;
-            font-weight: bold;
-        }
-
-        .tips-section {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .tips-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .tip-card {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .weather-section {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .weather-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .weather-card {
-            text-align: center;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .food-section {
-            margin-top: 2rem;
-        }
-
-        .food-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .food-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .food-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .food-card-content {
-            padding: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-                padding: 0 1rem;
-            }
-
-            header p {
-                font-size: 1rem;
-                padding: 0 1rem;
-            }
-
-            .container {
-                padding: 0 1rem;
-            }
-
-            .day-card {
-                margin-bottom: 1.5rem;
-                border-radius: 8px;
-            }
-
-            .day-header {
-                padding: 1rem;
-            }
-
-            .day-header h2 {
-                font-size: 1.3rem;
-            }
-
-            .day-content {
-                padding: 1rem;
-            }
-
-            .timeline {
-                padding-left: 1.5rem;
-            }
-
-            .time-block {
-                margin-bottom: 1.5rem;
-                padding-left: 1rem;
-            }
-
-            .time-block::before {
-                left: -1.8rem;
-                width: 0.8rem;
-                height: 0.8rem;
-            }
-
-            .time-block h3 {
-                font-size: 1.1rem;
-            }
-
-            .time-block p {
-                font-size: 0.95rem;
-            }
-
-            .time-block ul li {
-                font-size: 0.9rem;
-                padding-left: 1.2rem;
-                margin-bottom: 0.4rem;
-            }
-
-            .weather-section {
-                padding: 1rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .weather-grid {
-                grid-template-columns: 1fr;
-                gap: 0.8rem;
-            }
-
-            .weather-card {
-                padding: 0.8rem;
-            }
-
-            .tips-section {
-                padding: 1rem;
-            }
-
-            .tips-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .tip-card {
-                padding: 0.8rem;
-            }
-
-            .food-section {
-                margin-top: 1.5rem;
-            }
-
-            .food-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .food-card {
-                margin-bottom: 0.5rem;
-            }
-
-            .food-card-content {
-                padding: 0.8rem;
-            }
-
-            .food-card-content h3 {
-                font-size: 1.1rem;
-                margin-bottom: 0.3rem;
-            }
-
-            .food-card-content p {
-                font-size: 0.9rem;
-                line-height: 1.4;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.5rem;
-            }
-
-            .container {
-                padding: 0 0.8rem;
-            }
-
-            .day-header h2 {
-                font-size: 1.2rem;
-            }
-
-            .timeline::before {
-                width: 2px;
-            }
-
-            .time-block::before {
-                width: 0.7rem;
-                height: 0.7rem;
-                left: -1.6rem;
-            }
-
-            .time-block {
-                padding-left: 0.8rem;
-            }
-
-            .time-block h3 {
-                font-size: 1rem;
-            }
-
-            .time-block p, .time-block ul li {
-                font-size: 0.85rem;
-            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>金华三日游完美行程</h1>
-        <p>探索金华的文化、美食与自然风光</p>
-    </header>
-
-    <div class="container">
-        <div class="weather-section">
-            <h2>近期天气</h2>
-            <div class="weather-grid">
-                <div class="weather-card">
-                    <h3>今天</h3>
-                    <p>晴转多云</p>
-                    <p>27°C / 13°C</p>
-                </div>
-                <div class="weather-card">
-                    <h3>明天</h3>
-                    <p>多云</p>
-                    <p>26°C / 15°C</p>
-                </div>
-                <div class="weather-card">
-                    <h3>后天</h3>
-                    <p>中雨转小雨</p>
-                    <p>24°C / 15°C</p>
-                </div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Puff</div>
+            <ul class="nav-links">
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#contact">联系方式</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
             </div>
         </div>
+    </nav>
 
-        <div class="day-card">
-            <div class="day-header">
-                <h2>第一天：横店影视城一日游</h2>
-            </div>
-            <div class="day-content">
-                <div class="timeline">
-                    <div class="time-block">
-                        <h3>上午 (9:00-12:00)</h3>
-                        <p>横店影视城明清宫苑景区</p>
-                        <ul>
-                            <li>参观中国最大的古装影视拍摄基地</li>
-                            <li>观看大型表演节目</li>
-                            <li>打卡经典拍摄场景</li>
-                        </ul>
-                    </div>
-                    <div class="time-block">
-                        <h3>中午 (12:00-13:30)</h3>
-                        <p>横店特色午餐</p>
-                        <ul>
-                            <li>品尝浙江本地特色菜</li>
-                            <li>休息调整</li>
-                        </ul>
-                    </div>
-                    <div class="time-block">
-                        <h3>下午 (13:30-17:30)</h3>
-                        <p>影视城其他景区</p>
-                        <ul>
-                            <li>参观主题园区</li>
-                            <li>观看表演节目</li>
-                            <li>体验影视拍摄场景</li>
-                        </ul>
-                    </div>
-                    <div class="time-block">
-                        <h3>晚上 (18:00-21:00)</h3>
-                        <p>横店夜景和表演</p>
-                        <ul>
-                            <li>欣赏夜间表演</li>
-                            <li>体验横店夜市</li>
-                            <li>品尝特色小吃</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-header">
-                <h2>第二天：古镇文化之旅</h2>
-            </div>
-            <div class="day-content">
-                <div class="timeline">
-                    <div class="time-block">
-                        <h3>上午 (9:00-12:00)</h3>
-                        <p>佛堂古镇</p>
-                        <ul>
-                            <li>游览古街古巷</li>
-                            <li>参观历史建筑</li>
-                            <li>体验传统文化</li>
-                        </ul>
-                    </div>
-                    <div class="time-block">
-                        <h3>中午 (12:00-13:30)</h3>
-                        <p>古镇特色午餐</p>
-                        <ul>
-                            <li>品尝当地特色小吃</li>
-                            <li>体验传统美食</li>
-                        </ul>
-                    </div>
-                    <div class="time-block">
-                        <h3>下午 (14:00-17:30)</h3>
-                        <p>游埠古镇</p>
-                        <ul>
-                            <li>漫步古街</li>
-                            <li>参观古民居</li>
-                            <li>体验本地民俗</li>
-                        </ul>
-                    </div>
-                    <div class="time-block">
-                        <h3>晚上</h3>
-                        <p>返回市区</p>
-                        <ul>
-                            <li>品尝金华火腿等特色美食</li>
-                            <li>逛夜市或商业区</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-header">
-                <h2>第三天：自然风光之旅</h2>
-            </div>
-            <div class="day-content">
-                <div class="timeline">
-                    <div class="time-block">
-                        <h3>上午 (9:00-12:00)</h3>
-                        <p>双龙洞景区</p>
-                        <ul>
-                            <li>探索天然溶洞</li>
-                            <li>观赏壮观景色</li>
-                            <li>拍照留念</li>
-                        </ul>
-                    </div>
-                    <div class="time-block">
-                        <h3>中午 (12:00-13:30)</h3>
-                        <p>农家乐用餐</p>
-                        <ul>
-                            <li>品尝当地农家菜</li>
-                            <li>休息调整</li>
-                        </ul>
-                    </div>
-                    <div class="time-block">
-                        <h3>下午 (14:00-17:00)</h3>
-                        <p>金华山小冰岛</p>
-                        <ul>
-                            <li>观赏自然风光</li>
-                            <li>拍照打卡</li>
-                            <li>户外休闲</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="tips-section">
-            <h2>实用贴士</h2>
-            <div class="tips-grid">
-                <div class="tip-card">
-                    <h3>交通建议</h3>
-                    <ul>
-                        <li>建议租车或包车</li>
-                        <li>可使用打车软件</li>
-                        <li>提前查询公交路线</li>
-                    </ul>
-                </div>
-                <div class="tip-card">
-                    <h3>住宿建议</h3>
-                    <ul>
-                        <li>第一晚住横店</li>
-                        <li>第二、三晚住市区</li>
-                        <li>提前预订酒店</li>
-                    </ul>
-                </div>
-                <div class="tip-card">
-                    <h3>装备建议</h3>
-                    <ul>
-                        <li>舒适运动鞋</li>
-                        <li>防晒用品</li>
-                        <li>雨具</li>
-                        <li>充足饮用水</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="food-section">
-            <h2>特色美食推荐</h2>
-            <div class="food-grid">
-                <div class="food-card">
-                    <div class="food-card-content">
-                        <h3>金华火腿</h3>
-                        <p>金华特产，香味浓郁，肉质细腻，咸香可口，是金华最负盛名的特产之一</p>
-                    </div>
-                </div>
-                <div class="food-card">
-                    <div class="food-card-content">
-                        <h3>金华酥饼</h3>
-                        <p>历史悠久的传统名点，外皮金黄酥脆，内馅以梅干菜和猪肉为主，香味浓郁。据传始创于唐代程咬金，是金华最具代表性的特产之一。</p>
-                    </div>
-                </div>
-                <div class="food-card">
-                    <div class="food-card-content">
-                        <h3>义乌麦饼</h3>
-                        <p>香酥可口的传统点心，外皮酥脆，内里绵软，是义乌地区特色小吃</p>
-                    </div>
-                </div>
-            </div>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>欢迎来到泡芙的空间</h1>
+            <p>海内存知己 天涯若比邻</p>
         </div>
     </div>
+
+    <div class="container">
+        <section id="about" class="about-section">
+            <div class="section-header">
+                <h2>关于我</h2>
+            </div>
+            <div class="card-container">
+                <div class="profile-card">
+                    <img src="profile.jpg" alt="个人照片" class="profile-img">
+                    <h3>Puff</h3>
+                    <p class="title">程序员 | 江苏南京</p>
+                    <p class="bio">爱好是电子游戏和散步</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="section-header">
+                <h2>联系方式</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <h3>邮箱</h3>
+                    <p>1521811995@qq.com</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fab fa-github"></i></div>
+                    <h3>GitHub</h3>
+                    <p><a href="https://github.com/TombliboosPHC" target="_blank">github.com/TombliboosPHC</a></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>导航</h3>
+                <ul>
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>联系我</h3>
+                <ul>
+                    <li>邮箱：1521811995@qq.com</li>
+                    <li>位置：江苏南京</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Puff. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html> 
